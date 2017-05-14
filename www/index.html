@@ -149,20 +149,32 @@
         </ons-toolbar>
       
         <ons-list data-bind="foreach: items">
-          <ons-list-item tappable>
-            <div class="center" data-bind="text: content, click: $parent.detailsItem"></div>
+          <ons-list-item modifier="chevron" tappable>
+            <div class="left">
+                <img class="list-item__thumbnail" src="http://placekitten.com/g/40/40">
+            </div>
+            <div class="center">
+                <span class="list-item__title" data-bind="text: lotteryName, click: $parent.detailsItem"></span>
+                <span class="list-item__subtitle" data-bind="text: price"></span>
+            </div>
+          
+            <!--<div class="center" data-bind="text: content, click: $parent.detailsItem"></div>-->
+            <!--
             <div class="right" data-bind="click: $parent.removeItem">
               <ons-icon icon="ion-ios-trash-outline, material:md-delete"></ons-icon>
             </div>
+            -->
           </ons-list-item>
         </ons-list>
-    
+
+        <!--
         <ons-if platform="android">
           <ons-fab position="bottom right" data-bind="click: addItem">+</ons-fab>
         </ons-if>
         <ons-if platform="ios other">
           <p><ons-button modifier="large--quiet" data-bind="click: addItem">Add new item</ons-button></p>
         </ons-if>
+        -->
       </ons-page>
     </ons-template>
     

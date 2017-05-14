@@ -6,7 +6,8 @@ document.addEventListener('init', function(event) {
     ko.applyBindings(page.data.viewModel, page);
   } else {
     // Everything else by ID
-    var viewModel = page.id.charAt(0).toUpperCase() + (page.id.split('-')[0] || '').slice(1) + 'ViewModel';
+    var viewModel = "Lottery" + page.id.charAt(0).toUpperCase() + (page.id.split('-')[0] || '').slice(1) + 'ViewModel';
+    console.log(viewModel);
     if (window[viewModel]) {
       ko.applyBindings(new window[viewModel](), event.target);
     }
@@ -15,26 +16,39 @@ document.addEventListener('init', function(event) {
 ///////////////////////////////
 
 // Item model
-function ListItem(content) {
+function LotteryListItem(lotteryName, bgUrl, price, announceDate) {
   var self = this;
-  self.content = content;
+  self.lotteryName = lotteryName;
+  self.bgUrl = bgUrl;
+  self.price = price;
+  self.announceDate = announceDate;
+  
+  // content
+  self.update = function() {
+      self.content = self.lotteryName + " $" + self.price;
+  }
+  
+  self.update();
 }
+
 // Details page view model
-function DetailsViewModel(item) {
+function LotteryDetailsViewModel(item) {
   var self = this;
   self.item = item;
 }
+
 // List page view model
-function ListViewModel() {
+function LotteryListViewModel() {
   var self = this;
 
+  // Initial dat
   self.items = ko.observableArray([]);
-  for(var i = 0; i < 6; i++) {
-    self.items.push(new ListItem("Item " + i));
-  }
+  self.items.push(new LotteryListItem("Powerball", null, "180M", null));
+  self.items.push(new LotteryListItem("Mega", null, "40M", null));
+  self.items.push(new LotteryListItem("JumboLot", null, "1000M", null));
 
   self.addItem = function() {
-    self.items.push(new ListItem('Item ' + self.items().length));
+    self.items.push(new LotteryListItem('Item ' + self.items().length));
   };
 
   self.removeItem = function() {
@@ -44,7 +58,7 @@ function ListViewModel() {
   self.detailsItem = function() {
     document.querySelector('ons-navigator')
       .pushPage('details.html', {
-        data: { viewModel: new DetailsViewModel(this) }
+        data: { viewModel: new LotteryDetailsViewModel(this) }
       });
   };
 }
