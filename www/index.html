@@ -6,6 +6,9 @@
   <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
   <script src="components/loader.js"></script>
   <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="https://unpkg.com/knockout"></script>
+
+  <script src="index.js"></script>
 
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
@@ -33,12 +36,20 @@
   </script>
 </head>
 <body>
+  <ons-navigator id="mainNavigator" page="splitter.html"></ons-navigator>
+  <ons-template id="splitter.html">
   <ons-splitter>
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
         <ons-list>
           <ons-list-item onclick="fn.load('home.html')" tappable>
             Home
+          </ons-list-item>
+          <ons-list-item onclick="fn.load('login.html')" tappable>
+            Login
+          </ons-list-item>
+          <ons-list-item onclick="fn.load('lottery-list.html')" tappable>
+            Lottery
           </ons-list-item>
           <ons-list-item onclick="fn.load('settings.html')" tappable>
             Settings
@@ -51,6 +62,7 @@
     </ons-splitter-side>
     <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
   </ons-splitter>
+  </ons-template>
 
   <ons-template id="home.html">
     <ons-page>
@@ -64,11 +76,109 @@
           Main
         </div>
       </ons-toolbar>
+      
       <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
         Swipe right to open the menu!
       </p>
     </ons-page>
   </ons-template>
+
+  <ons-template id="login.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">Log In</div>
+        <div class="right"><ons-toolbar-button>Close</ons-toolbar-button></div>
+      </ons-toolbar>
+    
+      <div class="login-form">
+    
+        <input type="email" class="text-input--underbar" placeholder="Email" value="">
+        <input type="password" class="text-input--underbar" placeholder="Password" value="">
+        <br><br>
+        <ons-button modifier="large" class="login-button">Log In</ons-button>
+        <br><br>
+        <ons-button modifier="quiet" class="forgot-password">Forgot password?</ons-button>
+      </div>
+    </ons-page>
+  </ons-template>
+
+  <style>
+    .login-form {
+      text-align: center;
+      width: 80%;
+      margin: 60px auto 0;
+    }
+    
+    input[type=email], input[type=password] {
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+      outline: none;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+    
+    .login-button {
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .forgot-password {
+      display: block;
+      margin: 8px auto 0 auto;
+      font-size: 14px;
+    }
+  </style>
+    
+    <ons-template id="lottery-list.html">
+      <ons-page id="list-page">
+        <ons-toolbar>
+          <div class="left">
+            <ons-toolbar-button onclick="fn.open()">
+              <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+          <div class="center">
+            Lottery
+          </div>
+        </ons-toolbar>
+      
+        <ons-list data-bind="foreach: items">
+          <ons-list-item tappable>
+            <div class="center" data-bind="text: content, click: $parent.detailsItem"></div>
+            <div class="right" data-bind="click: $parent.removeItem">
+              <ons-icon icon="ion-ios-trash-outline, material:md-delete"></ons-icon>
+            </div>
+          </ons-list-item>
+        </ons-list>
+    
+        <ons-if platform="android">
+          <ons-fab position="bottom right" data-bind="click: addItem">+</ons-fab>
+        </ons-if>
+        <ons-if platform="ios other">
+          <p><ons-button modifier="large--quiet" data-bind="click: addItem">Add new item</ons-button></p>
+        </ons-if>
+      </ons-page>
+    </ons-template>
+    
+    <ons-template id="details.html">
+      <ons-page id="details-page">
+        <ons-toolbar>
+          <div class="left"><ons-back-button>Lottery</ons-back-button></div>
+          <div class="center">Lottery details</div>
+        </ons-toolbar>
+          <ons-row style="margin-top: 100px; text-align: center;">
+              <ons-col>
+                  <p style="color: #666; font-size: 18px;">You clicked on: <span style="color: #999" data-bind="text: item.content"></span></p>
+              </ons-col>
+          </ons-row>
+      </ons-page>
+    </ons-template>
 
   <ons-template id="settings.html">
   <ons-page>
