@@ -8,6 +8,8 @@
   <script src="lib/onsenui/js/onsenui.min.js"></script>
   <script src="https://unpkg.com/knockout"></script>
 
+  <script src="components/LotteryNumber.js"></script>
+  <script src="components/LotteryModel.js"></script>
   <script src="index.js"></script>
 
   <link rel="stylesheet" href="components/loader.css">
@@ -186,7 +188,10 @@
         </ons-toolbar>
           <ons-row style="margin-top: 100px; text-align: center;">
               <ons-col>
-                  <p style="color: #666; font-size: 18px;">You clicked on: <span style="color: #999" data-bind="text: item.content"></span></p>
+                  <p style="color: #666; font-size: 18px;" data-bind="text: item.lotteryName"></p>
+                  <span style="color: #999" data-bind="text: item.predictedPrizeAnnuity"></span><br/>
+                  <span style="color: #999" data-bind="text: item.predictedPrizeCash"></span><br/>
+                  <span style="color: #999" data-bind="text: item.nextDraw"></span><br/>
               </ons-col>
           </ons-row>
       </ons-page>

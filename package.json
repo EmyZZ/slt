@@ -1,0 +1,13 @@
+{
+    "name": "com.example.helloworld",
+    "version": "1.0.0",
+    "displayName": "Smart Lottery",
+    "cordova": {
+        "platforms": [
+            "android"
+        ]
+    },
+    "dependencies": {
+        "cordova-android": "~6.2.3"
+    }
+}

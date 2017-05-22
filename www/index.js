@@ -31,10 +31,33 @@ function LotteryListItem(lotteryName, bgUrl, price, announceDate) {
   self.update();
 }
 
+var print = function(o){
+  var str='';
+
+  for(var p in o){
+    if(typeof o[p] == 'string'){
+      str+= p + ': ' + o[p]+'; </br>';
+    }else{
+      str+= p + ': { </br>' + print(o[p]) + '}';
+    }
+  }
+
+  return str;
+}
+
+function queryItemDetails(lotteryName) {
+  // example code
+  var item = new LotteryModel(lotteryName);
+  item.fake(); // FIXME
+  return item;
+}
+
 // Details page view model
 function LotteryDetailsViewModel(item) {
+  console.log("LotteryDetailsViewModel: " + print(item));
   var self = this;
-  self.item = item;
+  var queryItem = queryItemDetails(item.lotteryName);
+  self.item = queryItem;
 }
 
 // List page view model
@@ -44,8 +67,10 @@ function LotteryListViewModel() {
   // Initial dat
   self.items = ko.observableArray([]);
   self.items.push(new LotteryListItem("Powerball", null, "180M", null));
-  self.items.push(new LotteryListItem("Mega", null, "40M", null));
-  self.items.push(new LotteryListItem("JumboLot", null, "1000M", null));
+  self.items.push(new LotteryListItem("Mega Millions", null, "40M", null));
+  self.items.push(new LotteryListItem("Super Lotto", null, "1000M", null));
+  self.items.push(new LotteryListItem("Cash 3", null, "100M", null));
+  self.items.push(new LotteryListItem("Fantasy 5", null, "100M", null));
 
   self.addItem = function() {
     self.items.push(new LotteryListItem('Item ' + self.items().length));
